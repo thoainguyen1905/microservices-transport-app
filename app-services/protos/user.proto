@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package Authentication;
 
+import "google/protobuf/struct.proto";
 import "google/protobuf/any.proto";
 
 service Auth {
@@ -9,9 +10,9 @@ service Auth {
     rpc test(testrequest) returns (testresponse) {}
 
     rpc signIn(signInDetails) returns (userResponse){}
-    rpc signUp(signupDetails) returns (success) {}
-    //rpc getMe(getUserRequest) returns (verifyResponse) {}
-    //rpc update(usernameUpdate) returns (verifyResponse) {}
+    rpc signUp(signUpDetails) returns (success) {}
+    rpc getMe(getUserRequest) returns (verifyResponse) {}
+    rpc update(usernameUpdate) returns (verifyResponse) {}
 
 }
 
@@ -35,18 +36,25 @@ message loginDetails {
     string password = 2;
 }
 
-message signupDetails {
+message Post {
+   oneof types {
+    string name = 1;
+    string code = 2;
+    string address = 3;
+    }
+}
+
+message signUpDetails {
     string phone = 1;
     string password = 2;
     string name = 3;
     string code = 4;
-    google.protobuf.Any post = 5;
+    google.protobuf.Struct post = 5;
 }
 
 message success {
     string status = 1;
     string message = 2;
-    string data = 3;
 }
 
 message userResponse {

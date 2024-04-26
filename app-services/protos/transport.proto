@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package Transport;
+
+service Transport {
+
+}
+
+message success {
+    string status = 1;
+    string message = 2;
+}

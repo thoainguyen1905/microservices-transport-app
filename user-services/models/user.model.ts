@@ -4,7 +4,7 @@ import "dotenv/config";
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  phone: { type: Number, required: true },
+  phone: { type: String, required: true },
   password: { type: String, required: true },
   name: { type: String, required: false },
   avatar: { type: String, required: false },
@@ -21,6 +21,6 @@ UserSchema.methods.generateAuthToken = function () {
   return token;
 };
 
-const UserModel = mongoose.model("User", UserSchema);
+const UserModel = mongoose.model("Staff", UserSchema);
 
 export default UserModel;
