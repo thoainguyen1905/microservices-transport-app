@@ -3,121 +3,91 @@ import { deliveryStaffValidation } from "./transport.types";
 import { generateCodeTransport } from "../helpers/react-utils";
 import { ReceiveModal, DeliveryModal } from "../models/transport.model";
 
-export const createReceive = async (req: Request, res: Response) => {
+export const createReceive = async ({ request }, callback: any) => {
   try {
-    const user = req.user;
-    const data = req.body;
-    const validation = deliveryStaffValidation(data);
-    if (validation.error) {
-      return res.status(400).json({
-        message: validation.error.details[0].message,
-        status: 400,
-      });
-    } else {
-      let code = generateCodeTransport();
-      const newDelivery = new ReceiveModal({
-        ...data,
-        code,
-        staffInfor: user.id,
-      });
-      await newDelivery.save();
-      return res.status(200).json({
-        message: "success",
-        status: 200,
-      });
-    }
+    let code = generateCodeTransport();
+    const newDelivery = new ReceiveModal({
+      ...request,
+      code,
+      staffInfor: request.staffInfor.id,
+    });
+    await newDelivery.save();
+    // }
+    callback(null, {
+      message: "success",
+      status: 200,
+    });
   } catch (error) {
-    return res.status(500).json(error);
+    callback(error);
   }
 };
 
-export const createDelivery = async (req: Request, res: Response) => {
+export const createDelivery = async ({ request }, callback: any) => {
   try {
-    const user = req.user;
-    const data = req.body;
-    const validation = deliveryStaffValidation(data);
-    if (validation.error) {
-      return res.status(400).json({
-        message: validation.error.details[0].message,
-        status: 400,
-      });
-    } else {
-      let code = generateCodeTransport();
-      const newDelivery = new DeliveryModal({
-        ...data,
-        code,
-        staffInfor: user.id,
-      });
-      await newDelivery.save();
-      return res.status(200).json({
-        message: "success",
-        status: 200,
-      });
-    }
+    let code = generateCodeTransport();
+    const newDelivery = new DeliveryModal({
+      ...request,
+      code,
+      staffInfor: request.staffInfor.id,
+    });
+    await newDelivery.save();
+    callback(null, {
+      message: "success",
+      status: 200,
+    });
   } catch (error) {
-    return res.status(500).json(error);
+    callback(error);
   }
 };
 
-export const changeStatus = async (req: Request, res: Response) => {
+export const changeStatus = async ({ request }, callback: any) => {
   try {
-    const { id, status, target } = req.body;
+    const { id, status, target } = request;
     if (target === "receive") {
       const transport = await ReceiveModal.findByIdAndUpdate(id, {
         status: status,
-      });
-      return res.status(200).json({
-        message: "success",
-        status: 200,
       });
     } else if (target === "delivery") {
       const transport = await DeliveryModal.findByIdAndUpdate(id, {
         status: status,
       });
-      return res.status(200).json({
-        message: "success",
-        status: 200,
-      });
     }
-    return res.status(404).json({
-      message: "cannot found target",
-      status: 404,
+    callback(null, {
+      message: "success",
+      status: 200,
     });
   } catch (error) {
-    return res.status(500).json(error);
+    callback(error);
   }
 };
 
-export const getReceive = async (req: Request, res: Response) => {
-  const { status } = req.query;
+export const getReceive = async ({ request }, callback: any) => {
   try {
-    const receives = await ReceiveModal.find({
-      staffInfor: req.user.id,
-      status: status ?? 0,
-    });
-    return res.status(200).json({
+    const listReceiver = await ReceiveModal.find({
+      staffInfor: request.id,
+    }).select("-staffInfor");
+    callback(null, {
       message: "success",
       status: 200,
-      data: receives,
+      data: listReceiver,
     });
   } catch (error) {
-    return res.status(500).json(error);
+    callback(error);
   }
 };
 
-export const getDelivery = async (req: Request, res: Response) => {
-  const { status } = req.query;
+export const getDelivery = async ({ request }, callback: any) => {
   try {
-    const deliveries = await DeliveryModal.find({
-      staffInfor: req.user.id,
-      status: status ?? 0,
-    });
-    return res.status(200).json({
+    const listReceiver = await DeliveryModal.find({
+      staffInfor: request.id,
+    }).select("-staffInfor");
+
+    callback(null, {
       message: "success",
       status: 200,
-      data: deliveries,
+      data: listReceiver,
     });
   } catch (error) {
-    return res.status(500).json(error);
+    callback(error);
   }
 };
