@@ -13,8 +13,8 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 
 const transportProto = grpc.loadPackageDefinition(packageDefinition).Transport;
 
-const transportClient = new transportProto.Auth(
-  "transport_service:3002",
+const transportClient = new transportProto.Transport(
+  "localhost:3002",
   // "0.0.0.0:3002",
   grpc.credentials.createInsecure()
 );

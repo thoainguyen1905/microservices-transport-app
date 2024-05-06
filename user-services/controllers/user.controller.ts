@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 import grpc from "@grpc/grpc-js";
 import UserModel from "../models/user.model";
+import ShippingModel from "../models/shipping.model";
 
 export const signIn = async ({ request }, callback: any) => {
   try {
@@ -76,14 +77,43 @@ export const signUp = async ({ request }, callback: any) => {
           avatar:
             "https://vcdn-kinhdoanh.vnecdn.net/2023/08/31/image2-2439-1693476735.jpg",
         });
-        console.log(newUser);
-        // await newUser.save();
+        await newUser.save();
         callback(null, {
           message: "success",
           status: 200,
         });
       });
     }
+  } catch (error) {
+    callback(error);
+  }
+};
+
+export const createShipping = async ({ request }, callback: any) => {
+  try {
+    const newShipping = new ShippingModel({
+      name: request.name,
+      address: request.address,
+      code: request.code,
+    });
+    await newShipping.save();
+    callback(null, {
+      message: "success",
+      status: 200,
+    });
+  } catch (error) {
+    callback(error);
+  }
+};
+
+export const getShippings = async ({ request }, callback: any) => {
+  try {
+    const shippings = await ShippingModel.find();
+    callback(null, {
+      message: "success",
+      status: 200,
+      data: [...shippings],
+    });
   } catch (error) {
     callback(error);
   }

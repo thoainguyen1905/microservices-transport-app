@@ -11,10 +11,14 @@ service Auth {
 
     rpc signIn(signInDetails) returns (userResponse){}
     rpc signUp(signUpDetails) returns (success) {}
+    rpc createShipping(Post) returns (success) {}
+    rpc getShippings(Empty) returns (responsePost) {} 
     rpc getMe(getUserRequest) returns (verifyResponse) {}
     rpc update(usernameUpdate) returns (verifyResponse) {}
 
 }
+
+message Empty {}
 
 //test message
 message testrequest {
@@ -37,11 +41,16 @@ message loginDetails {
 }
 
 message Post {
-   oneof types {
     string name = 1;
     string code = 2;
     string address = 3;
-    }
+    string _id = 4;
+}
+
+message responsePost {
+    string status = 1;
+    string message = 2;
+    repeated Post data = 3;
 }
 
 message signUpDetails {
@@ -49,7 +58,7 @@ message signUpDetails {
     string password = 2;
     string name = 3;
     string code = 4;
-    google.protobuf.Struct post = 5;
+    repeated Post post = 5;
 }
 
 message success {

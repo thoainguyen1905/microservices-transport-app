@@ -4,7 +4,14 @@ const grpc = require("@grpc/grpc-js");
 const mongoose = require("mongoose");
 const protoLoader = require("@grpc/proto-loader");
 const PROTO_PATH = __dirname + "/protos/user.proto";
-import { signIn, getMe, signUp, testapi } from "./controllers/user.controller";
+import {
+  signIn,
+  getMe,
+  signUp,
+  testapi,
+  createShipping,
+  getShippings,
+} from "./controllers/user.controller";
 import cors from "cors";
 const app = express();
 
@@ -39,6 +46,8 @@ async function main() {
     test: testapi,
     signIn: signIn,
     signUp: signUp,
+    createShipping: createShipping,
+    getShippings: getShippings,
   });
   server.bindAsync(
     "0.0.0.0:3001",

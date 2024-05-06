@@ -4,7 +4,7 @@ import "dotenv/config";
 import * as bodyParser from "body-parser";
 import express, { Router } from "express";
 
-const PORT = process.env.PORT || 8888;
+const PORT = process.env.PORT || 8080;
 
 const app = express();
 

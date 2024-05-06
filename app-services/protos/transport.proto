@@ -2,11 +2,81 @@ syntax = "proto3";
 
 package Transport;
 
-service Transport {
+import "google/protobuf/struct.proto";
+import "google/protobuf/any.proto";
 
+service Transport {
+    rpc createReceive(transportDetail) returns (success) {}
+    rpc createDelivery(transportDetail) returns (success) {}
+    rpc changeStatus(statusBody) returns (success) {}
+    rpc getReceive(Infor) returns (responseList) {}
+    rpc getDelivery(Infor) returns (responseList) {}
 }
 
 message success {
     string status = 1;
     string message = 2;
+}
+
+message transportDetail {
+    string phoneShop = 1;
+    string phoneReceiver = 2;
+    string description = 3;
+    string address = 4;
+    string shopName = 5;
+    string receiver = 6;
+    string price = 7;
+    string code = 8;
+    string type = 9;
+    string status = 12;
+    string weight = 10;
+    Infor staffInfor = 11;
+}
+
+message responseTransport {
+    string phoneShop = 1;
+    string phoneReceiver = 2;
+    string description = 3;
+    string address = 4;
+    string shopName = 5;
+    string receiver = 6;
+    string price = 7;
+    string code = 8;
+    string type = 9;
+    string status = 12;
+    string weight = 10;
+    string _id = 11;
+}
+
+message responseList {
+    string status = 1;
+    string message = 2;
+    repeated responseTransport data = 3;
+}
+
+message Post {
+    string name = 1;
+    string code = 2;
+    string address = 3;
+}
+
+message Infor {
+    string name = 1;
+    string phone = 2;
+    string code = 3;
+    string avatar = 4;
+    repeated Post post = 5;
+    string id = 6;
+}
+
+message responseListTransport {
+    string status = 1;
+    string message = 2;
+    repeated responseTransport data = 3;
+}
+
+message statusBody {
+    string id = 1;
+    string status = 2;
+    string target = 3;
 }
