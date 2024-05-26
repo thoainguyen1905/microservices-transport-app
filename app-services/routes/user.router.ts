@@ -50,11 +50,29 @@ userRouter.post("/shipping", async (req: Request, res: Response) => {
   );
 });
 
+userRouter.get("/me", async (req: any, res: Response) => {
+  const authHeader = req.headers["authorization"];
+  authClient.getMe(
+    {
+      token: authHeader,
+    },
+    (err, response) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json(response);
+    }
+  );
+});
+
 userRouter.get("/shipping", async (req: Request, res: Response) => {
-  authClient.getShippings({}, (err, response) => {
-    if (err) return res.status(500).json(err);
-    return res.status(200).json(response);
-  });
+  authClient.getShippings(
+    {
+      status: "1",
+    },
+    (err, response) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json(response);
+    }
+  );
 });
 
 export default userRouter;

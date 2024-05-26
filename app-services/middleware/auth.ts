@@ -14,7 +14,7 @@ const auth = (req, res, next) => {
     token = token.slice(7);
   }
   try {
-    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const decoded = jwt.verify(token, "scretkeytest1234");
     req.user = decoded;
     next();
   } catch (err) {

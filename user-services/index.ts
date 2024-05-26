@@ -48,6 +48,7 @@ async function main() {
     signUp: signUp,
     createShipping: createShipping,
     getShippings: getShippings,
+    getMe: getMe,
   });
   server.bindAsync(
     "0.0.0.0:3001",

@@ -6,12 +6,12 @@ import { ReceiveModal, DeliveryModal } from "../models/transport.model";
 export const createReceive = async ({ request }, callback: any) => {
   try {
     let code = generateCodeTransport();
-    const newDelivery = new ReceiveModal({
+    const newReceive = new ReceiveModal({
       ...request,
       code,
       staffInfor: request.staffInfor.id,
     });
-    await newDelivery.save();
+    await newReceive.save();
     // }
     callback(null, {
       message: "success",
@@ -61,11 +61,14 @@ export const changeStatus = async ({ request }, callback: any) => {
   }
 };
 
-export const getReceive = async ({ request }, callback: any) => {
+export const getReceive = async (call, callback: any) => {
   try {
+    const { id, status } = call.request;
     const listReceiver = await ReceiveModal.find({
-      staffInfor: request.id,
+      staffInfor: id,
+      status: status,
     }).select("-staffInfor");
+
     callback(null, {
       message: "success",
       status: 200,
@@ -76,10 +79,12 @@ export const getReceive = async ({ request }, callback: any) => {
   }
 };
 
-export const getDelivery = async ({ request }, callback: any) => {
+export const getDelivery = async (call, callback: any) => {
   try {
+    const { id, status } = call.request;
     const listReceiver = await DeliveryModal.find({
-      staffInfor: request.id,
+      staffInfor: id,
+      status: status,
     }).select("-staffInfor");
 
     callback(null, {

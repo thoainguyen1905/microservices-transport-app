@@ -12,9 +12,9 @@ service Auth {
     rpc signIn(signInDetails) returns (userResponse){}
     rpc signUp(signUpDetails) returns (success) {}
     rpc createShipping(Post) returns (success) {}
-    rpc getShippings(Empty) returns (responsePost) {} 
-    rpc getMe(getUserRequest) returns (verifyResponse) {}
+    rpc getMe(getUserRequest) returns (responseProfile) {}
     rpc update(usernameUpdate) returns (verifyResponse) {}
+    rpc getShippings(Empty) returns (responsePost) {}
 
 }
 
@@ -60,6 +60,18 @@ message signUpDetails {
     repeated Post post = 5;
 }
 
+message responseProfile {
+    string phone = 1;
+    string code = 2;
+    string name = 3;
+    string avatar = 4;
+    repeated Post post = 5;
+    string id = 6;
+    string status = 7;
+    string message = 8;
+
+}
+
 message success {
     string status = 1;
     string message = 2;
@@ -78,7 +90,7 @@ message verifyResponse {
 }
 
 message getUserRequest {
-    int32 id = 1;   
+    string token = 1; 
 }
 
 message usernameUpdate{

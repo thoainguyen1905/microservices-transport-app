@@ -9,14 +9,16 @@ service Transport {
     rpc createReceive(transportDetail) returns (success) {}
     rpc createDelivery(transportDetail) returns (success) {}
     rpc changeStatus(statusBody) returns (success) {}
-    rpc getReceive(Infor) returns (responseList) {}
-    rpc getDelivery(Infor) returns (responseList) {}
+    rpc getReceive(paramsDelivery) returns (responseList) {}
+    rpc getDelivery(paramsDelivery) returns (responseList) {}
 }
 
 message success {
     string status = 1;
     string message = 2;
 }
+
+
 
 message transportDetail {
     string phoneShop = 1;
@@ -28,9 +30,9 @@ message transportDetail {
     string price = 7;
     string code = 8;
     string type = 9;
-    string status = 12;
     string weight = 10;
     Infor staffInfor = 11;
+    string status = 12;
 }
 
 message responseTransport {
@@ -79,4 +81,9 @@ message statusBody {
     string id = 1;
     string status = 2;
     string target = 3;
+}
+
+message paramsDelivery {
+    string status = 1;
+    string id = 2;
 }

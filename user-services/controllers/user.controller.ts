@@ -5,6 +5,7 @@ import "dotenv/config";
 import grpc from "@grpc/grpc-js";
 import UserModel from "../models/user.model";
 import ShippingModel from "../models/shipping.model";
+const jwt = require("jsonwebtoken");
 
 export const signIn = async ({ request }, callback: any) => {
   try {
@@ -30,7 +31,7 @@ export const signIn = async ({ request }, callback: any) => {
             createTime: staff.createTime,
             id: staff.id,
           },
-          process.env.SECRET_KEY
+          "scretkeytest1234"
         );
         // return res.status(200).json({
         //   token,
@@ -119,12 +120,34 @@ export const getShippings = async ({ request }, callback: any) => {
   }
 };
 
-export const getMe = async (req: Request, res: Response) => {
+export const getMe = async (call: any, callback: any) => {
   try {
-    const user = req.user;
-    return res.status(200).json(user);
+    var token = call.request.token;
+    if (!token) {
+      return callback({
+        code: grpc.status.UNAUTHENTICATED,
+        details: "Token is required",
+      });
+    }
+    if (token.startsWith("Bearer ")) {
+      token = token.slice(7);
+    }
+    const decode = await jwt.verify(token, "scretkeytest1234");
+    callback(null, {
+      message: "success",
+      status: 200,
+      name: decode.name,
+      phone: decode.phone,
+      code: decode.code,
+      avatar: decode.avatar,
+      post: decode.post,
+      id: decode.id,
+    });
   } catch (error) {
-    return res.status(500).json(error);
+    callback(null, {
+      message: "Invalid token",
+      status: 401,
+    });
   }
 };
 
