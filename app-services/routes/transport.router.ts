@@ -32,10 +32,12 @@ transportRouter.post("/delivery", auth, async (req: any, res: Response) => {
 
 transportRouter.get("/receive", auth, async (req: any, res: Response) => {
   const status = req.query.status;
+  const query = req.query.q;
   transportClient.getReceive(
     {
       ...req.user,
       status: status.toString(),
+      q: query ?? "",
     },
     (err, response) => {
       if (err) return res.status(500).json(err);
@@ -46,10 +48,12 @@ transportRouter.get("/receive", auth, async (req: any, res: Response) => {
 
 transportRouter.get("/delivery", auth, async (req: any, res: Response) => {
   const status = req.query.status;
+  const query = req.query.q;
   transportClient.getDelivery(
     {
       id: req.user.id,
       status: status.toString(),
+      q: query ?? "",
     },
     (err, response) => {
       if (err) return res.status(500).json(err);
