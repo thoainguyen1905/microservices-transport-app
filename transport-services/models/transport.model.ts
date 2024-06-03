@@ -1,3 +1,4 @@
+import { required } from "joi";
 import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
@@ -15,6 +16,10 @@ const TransportSchema = new Schema({
   type: { type: String },
   weight: { type: Number },
   staffInfor: { type: Schema.Types.ObjectId, ref: "Staff" },
+  postCode: {
+    type: String,
+    required: true,
+  },
   createTime: {
     type: Date,
     default: Date.now,

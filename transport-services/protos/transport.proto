@@ -18,11 +18,7 @@ message success {
     string message = 2;
 }
 
-message responseShipping {
-    string message = 1;
-    string status = 2;
-    repeated Post post = 5;
-}
+
 
 message transportDetail {
     string phoneShop = 1;
@@ -52,6 +48,7 @@ message responseTransport {
     string status = 12;
     string weight = 10;
     string _id = 11;
+    string postCode = 13;
 }
 
 message responseList {
@@ -90,4 +87,5 @@ message statusBody {
 message paramsDelivery {
     string status = 1;
     string id = 2;
+    string q = 3;
 }

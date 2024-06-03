@@ -63,10 +63,11 @@ export const changeStatus = async ({ request }, callback: any) => {
 
 export const getReceive = async (call, callback: any) => {
   try {
-    const { id, status } = call.request;
+    const { id, status, q } = call.request;
     const listReceiver = await ReceiveModal.find({
       staffInfor: id,
       status: status,
+      shopName: new RegExp(q ?? "", "i"),
     }).select("-staffInfor");
 
     callback(null, {
@@ -81,10 +82,11 @@ export const getReceive = async (call, callback: any) => {
 
 export const getDelivery = async (call, callback: any) => {
   try {
-    const { id, status } = call.request;
+    const { id, status, q } = call.request;
     const listReceiver = await DeliveryModal.find({
       staffInfor: id,
       status: status,
+      shopName: new RegExp(q ?? "", "i"),
     }).select("-staffInfor");
 
     callback(null, {
