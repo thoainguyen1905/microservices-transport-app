@@ -63,7 +63,7 @@ export const changeStatus = async ({ request }, callback: any) => {
 
 export const getReceive = async (call, callback: any) => {
   try {
-    const { id, status, q } = call.request;
+    const { id, status, q, postCode } = call.request;
     const listReceiver = await ReceiveModal.find({
       staffInfor: id,
       status: status,
@@ -82,11 +82,12 @@ export const getReceive = async (call, callback: any) => {
 
 export const getDelivery = async (call, callback: any) => {
   try {
-    const { id, status, q } = call.request;
+    const { id, status, q, postCode } = call.request;
     const listReceiver = await DeliveryModal.find({
       staffInfor: id,
       status: status,
       shopName: new RegExp(q ?? "", "i"),
+      postCode: postCode ?? "",
     }).select("-staffInfor");
 
     callback(null, {

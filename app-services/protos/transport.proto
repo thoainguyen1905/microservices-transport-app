@@ -88,4 +88,5 @@ message paramsDelivery {
     string status = 1;
     string id = 2;
     string q = 3;
+    string postCode = 4;
 }
