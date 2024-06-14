@@ -49,6 +49,7 @@ message responseTransport {
     string weight = 10;
     string _id = 11;
     string postCode = 13;
+    bool refund = 14;
 }
 
 message responseList {

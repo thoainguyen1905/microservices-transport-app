@@ -67,6 +67,7 @@ export const getReceive = async (call, callback: any) => {
     const listReceiver = await ReceiveModal.find({
       staffInfor: id,
       status: status,
+      $or: [{ refund: false }, { refund: { $exists: false } }],
       shopName: new RegExp(q ?? "", "i"),
     }).select("-staffInfor");
 
@@ -83,9 +84,10 @@ export const getReceive = async (call, callback: any) => {
 export const getDelivery = async (call, callback: any) => {
   try {
     const { id, status, q, postCode } = call.request;
-    const listReceiver = await DeliveryModal.find({
+    const listDelivery: any = await DeliveryModal.find({
       staffInfor: id,
       status: status,
+      $or: [{ refund: false }, { refund: { $exists: false } }],
       shopName: new RegExp(q ?? "", "i"),
       postCode: postCode ?? "",
     }).select("-staffInfor");
@@ -93,7 +95,7 @@ export const getDelivery = async (call, callback: any) => {
     callback(null, {
       message: "success",
       status: 200,
-      data: listReceiver,
+      data: listDelivery,
     });
   } catch (error) {
     callback(error);

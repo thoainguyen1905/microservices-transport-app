@@ -20,6 +20,7 @@ const TransportSchema = new Schema({
     type: String,
     required: true,
   },
+  refund: { type: Boolean },
   createTime: {
     type: Date,
     default: Date.now,
