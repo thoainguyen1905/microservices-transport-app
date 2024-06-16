@@ -9,6 +9,7 @@ const TransportSchema = new Schema({
   address: { type: String, required: true },
   description: { type: String, required: true },
   receiver: { type: String, required: true },
+  refund: { type: Boolean },
   shopName: { type: String, required: true },
   price: { type: Number, required: true },
   code: { type: Number, required: true },

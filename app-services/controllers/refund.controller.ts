@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import RefundModel from "../models/refund.model";
+import { DeliveryModal, ReceiveModal } from "../models/transport.model";
 
 export const createRefund = async (req: any, res: Response) => {
   try {
@@ -11,6 +12,18 @@ export const createRefund = async (req: any, res: Response) => {
       reason: req.body.reason,
     });
     newRefund.save();
+    if (req.body.target === "delivery") {
+      const updateTransport = await DeliveryModal.findByIdAndUpdate(
+        req.body.deliveryInfor,
+        {
+          refund: true,
+        }
+      );
+    } else {
+      await ReceiveModal.findByIdAndUpdate(req.body.receiveInfor, {
+        refund: true,
+      });
+    }
     return res.status(200).json({
       status: 200,
       message: "success",
