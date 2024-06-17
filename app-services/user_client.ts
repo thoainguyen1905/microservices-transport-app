@@ -12,7 +12,7 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 });
 
 const userProto = grpc.loadPackageDefinition(packageDefinition).Authentication;
-
+//giao tiếp microservices thông qua cổng 3001 ở đây là services user
 const authClient = new userProto.Auth(
   "localhost:3001",
   // "user-services-mauve.vercel.app",

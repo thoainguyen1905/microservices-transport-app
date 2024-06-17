@@ -5,7 +5,7 @@ import HistoryModel from "../models/history_phone.model";
 import transportClient from "../transport_client";
 import auth from "../middleware/auth";
 import "dotenv/config";
-
+// tạo đơn nhận hàng
 transportRouter.post("/receive", auth, async (req: any, res: Response) => {
   transportClient.createReceive(
     {
@@ -18,7 +18,7 @@ transportRouter.post("/receive", auth, async (req: any, res: Response) => {
     }
   );
 });
-
+//tạo đơn chuyển hàng
 transportRouter.post("/delivery", auth, async (req: any, res: Response) => {
   transportClient.createDelivery(
     {
@@ -31,7 +31,7 @@ transportRouter.post("/delivery", auth, async (req: any, res: Response) => {
     }
   );
 });
-
+//lấy danh sách đơn hàng nhận
 transportRouter.get("/receive", auth, async (req: any, res: Response) => {
   const { postCode, q, status } = req.query;
   transportClient.getReceive(
@@ -47,7 +47,7 @@ transportRouter.get("/receive", auth, async (req: any, res: Response) => {
     }
   );
 });
-
+// lấy danh sách đơn hàng chuyển đi
 transportRouter.get("/delivery", auth, async (req: any, res: Response) => {
   const { postCode, q, status } = req.query;
   transportClient.getDelivery(
@@ -63,7 +63,7 @@ transportRouter.get("/delivery", auth, async (req: any, res: Response) => {
     }
   );
 });
-
+//thay đổi trạng thái khi user nhận hàng
 transportRouter.post("/change/transport", async (req: any, res: Response) => {
   transportClient.changeStatus(
     {
@@ -75,7 +75,7 @@ transportRouter.post("/change/transport", async (req: any, res: Response) => {
     }
   );
 });
-
+//thay đổi thông tin của một đơn gửi hàng
 transportRouter.put("/delivery", async (req: Request, res: Response) => {
   try {
     const updateRecord = await DeliveryModal.findByIdAndUpdate(
@@ -97,6 +97,7 @@ transportRouter.put("/delivery", async (req: Request, res: Response) => {
     });
   }
 });
+//thay đổi thông tin của một đơn nhận hàng
 transportRouter.put("/receive", async (req: Request, res: Response) => {
   try {
     const updateRecord = await ReceiveModal.findByIdAndUpdate(
@@ -118,7 +119,7 @@ transportRouter.put("/receive", async (req: Request, res: Response) => {
     });
   }
 });
-
+// lấy thông tin chi tiết của một đơn gửi hàng
 transportRouter.get("/delivery/id=:id", async (req: Request, res: Response) => {
   try {
     const details = await DeliveryModal.findById(req.params.id);
@@ -136,6 +137,7 @@ transportRouter.get("/delivery/id=:id", async (req: Request, res: Response) => {
     });
   }
 });
+// lấy thông tin chi tiết của một đơn nhận hàng
 transportRouter.get("/receive/id=:id", async (req: Request, res: Response) => {
   try {
     const details = await ReceiveModal.findById(req.params.id);
@@ -153,7 +155,7 @@ transportRouter.get("/receive/id=:id", async (req: Request, res: Response) => {
     });
   }
 });
-
+//tạo một cuộc gọi đến với khách hàng
 transportRouter.post("/delivery/call", async (req: Request, res: Response) => {
   try {
     const newData = new HistoryModel(req.body);
@@ -169,7 +171,7 @@ transportRouter.post("/delivery/call", async (req: Request, res: Response) => {
     });
   }
 });
-
+//lấy danh sách cuộc gọi của một đơn hàng
 transportRouter.get("/call", async (req: Request, res: Response) => {
   try {
     const listCall = await HistoryModel.find({

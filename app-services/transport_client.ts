@@ -12,7 +12,7 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 });
 
 const transportProto = grpc.loadPackageDefinition(packageDefinition).Transport;
-
+//giao tiếp microservices thông qua cổng 3002 ở đây là services transport các đơn hàng
 const transportClient = new transportProto.Transport(
   "localhost:3002",
   // 'transport-services.vercel.app',

@@ -2,7 +2,7 @@ import authClient from "../user_client";
 import express, { Router } from "express";
 import { Request, Response } from "express";
 const userRouter: Router = express.Router();
-
+//đăng ký
 userRouter.post("/sign-in", async (req: Request, res: Response) => {
   authClient.signIn(
     { phone: req.body.phone, password: req.body.password },
@@ -19,7 +19,7 @@ userRouter.post("/test", async (req: Request, res: Response) => {
     return res.status(200).json(response);
   });
 });
-
+//đăng nhập
 userRouter.post("/sign-up", async (req: Request, res: Response) => {
   authClient.signUp(
     {
@@ -35,7 +35,7 @@ userRouter.post("/sign-up", async (req: Request, res: Response) => {
     }
   );
 });
-
+//tạo các địa điểm bưu cục
 userRouter.post("/shipping", async (req: Request, res: Response) => {
   authClient.createShipping(
     {
@@ -49,7 +49,7 @@ userRouter.post("/shipping", async (req: Request, res: Response) => {
     }
   );
 });
-
+//gọi lấy thông tin user
 userRouter.get("/me", async (req: any, res: Response) => {
   const authHeader = req.headers["authorization"];
   authClient.getMe(
@@ -62,7 +62,7 @@ userRouter.get("/me", async (req: any, res: Response) => {
     }
   );
 });
-
+//lấy danh sách bưu cục cho user
 userRouter.get("/shipping", async (req: Request, res: Response) => {
   authClient.getShippings(
     {

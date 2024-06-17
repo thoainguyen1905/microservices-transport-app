@@ -4,7 +4,7 @@ package Authentication;
 
 import "google/protobuf/struct.proto";
 import "google/protobuf/any.proto";
-
+// thiết lập services ở đây tên là Auth ở đay định nghĩa các hàm đầu vào và trả ra ở api
 service Auth {
     //test
     rpc test(testrequest) returns (testresponse) {}
@@ -17,6 +17,9 @@ service Auth {
     rpc getShippings(Empty) returns (responsePost) {}
 
 }
+
+//hàm signIn định nghĩa đầu vào là signInDetails ở dưới bao gồm trường phone và password returns về userResponse bao gồm sẽ có trường token,status,message
+//các hàm định nghĩa các cũng tương tự như vậy
 
 message Empty {}
 

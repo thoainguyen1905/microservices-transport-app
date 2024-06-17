@@ -4,7 +4,7 @@ package Transport;
 
 import "google/protobuf/struct.proto";
 import "google/protobuf/any.proto";
-
+// thiết lập services ở đây với tên là Transport chứa các obj truyền vào và các obj sẽ được trả ra
 service Transport {
     rpc createReceive(transportDetail) returns (success) {}
     rpc createDelivery(transportDetail) returns (success) {}
@@ -13,6 +13,8 @@ service Transport {
     rpc getDelivery(paramsDelivery) returns (responseList) {}
 }
 
+//hàm createReceive dùng để tại các đơn hàng nhận với obj đầu vào là transportDetail chứa các thuộc tính như ở dưới và trả ra success có status và message để thông báo trạng thái tạo đơn hàng
+//các hàm định nghĩa các cũng tương tự như vậy
 message success {
     string status = 1;
     string message = 2;

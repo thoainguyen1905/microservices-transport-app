@@ -8,7 +8,7 @@ import express, { Router } from "express";
 const PORT = process.env.PORT || 8080;
 
 const app = express();
-
+//phần gốc của app kết nối mongodb và các routes để gọi api
 const connectDB = async () => {
   // const dbURI =
   //   "mongodb+srv://thoaikun1905:thoaikun1905@cluster0.ohsmtrq.mongodb.net/";
